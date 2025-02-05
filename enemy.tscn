@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://cygxlrpdhx8lh"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6b64j"]
+radius = 32.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4n2df"]
+radius = 5.0
+
+[node name="enemy" type="CharacterBody2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+
+[node name="detection_area" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detection_area"]
+shape = SubResource("CircleShape2D_6b64j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_4n2df")
