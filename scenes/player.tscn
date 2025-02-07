@@ -1,0 +1,137 @@
+[gd_scene load_steps=9 format=3 uid="uid://cpgcdrlg1bidn"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_vc8ki"]
+[ext_resource type="Texture2D" uid="uid://cu7olxe3tg0pt" path="res://art/character/Character_Final-Sheet.png" id="2_kf4wm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3e3sj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3loip"]
+atlas = ExtResource("2_kf4wm")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_orv4e"]
+atlas = ExtResource("2_kf4wm")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6m8mb"]
+atlas = ExtResource("2_kf4wm")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_61xvh"]
+animations = [{
+"frames": [],
+"loop": true,
+"name": &"back_attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3loip")
+}],
+"loop": true,
+"name": &"back_idle",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"back_walk",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"front_attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_orv4e")
+}],
+"loop": true,
+"name": &"front_idle",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"front_walk",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"side_attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6m8mb")
+}],
+"loop": true,
+"name": &"side_idle",
+"speed": 5.0
+}, {
+"frames": [],
+"loop": true,
+"name": &"side_walk",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_j7ai0"]
+radius = 14.0
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_vc8ki")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_3e3sj")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_61xvh")
+animation = &"front_idle"
+
+[node name="player_hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player_hitbox"]
+shape = SubResource("CircleShape2D_j7ai0")
+
+[node name="attack_cooldown" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="deal_attack_timer" type="Timer" parent="."]
+wait_time = 0.5
+
+[node name="world_camera" type="Camera2D" parent="."]
+zoom = Vector2(1.5, 1.5)
+limit_left = 0
+limit_top = 0
+limit_right = 1150
+limit_bottom = 660
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+
+[node name="bridge_camera" type="Camera2D" parent="."]
+position = Vector2(346, 298)
+zoom = Vector2(1.5, 1.5)
+limit_left = 0
+limit_top = 150
+limit_right = 720
+limit_bottom = 550
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+
+[node name="healthbar" type="ProgressBar" parent="."]
+modulate = Color(0, 1, 0, 1)
+offset_left = -26.0
+offset_top = 38.0
+offset_right = 151.0
+offset_bottom = 65.0
+scale = Vector2(0.3, 0.3)
+show_percentage = false
+
+[node name="regain_timer" type="Timer" parent="."]
+
+[connection signal="body_entered" from="player_hitbox" to="." method="_on_player_hitbox_body_entered"]
+[connection signal="body_exited" from="player_hitbox" to="." method="_on_player_hitbox_body_exited"]
+[connection signal="timeout" from="attack_cooldown" to="." method="_on_attack_cooldown_timeout"]
+[connection signal="timeout" from="deal_attack_timer" to="." method="_on_deal_attack_timer_timeout"]
+[connection signal="timeout" from="regain_timer" to="." method="_on_regain_timer_timeout"]
