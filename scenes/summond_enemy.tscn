@@ -1,0 +1,84 @@
+[gd_scene load_steps=11 format=3 uid="uid://bt0v8cto55340"]
+
+[ext_resource type="Script" path="res://scripts/finite_state_machine.gd" id="1_8ygf4"]
+[ext_resource type="Script" path="res://scripts/summond_enemy.gd" id="1_ph2nx"]
+[ext_resource type="Script" path="res://scripts/state.gd" id="2_ehy5i"]
+[ext_resource type="Script" path="res://scripts/follow.gd" id="3_yu8u6"]
+[ext_resource type="Script" path="res://scripts/attack_enemy.gd" id="4_wy5yl"]
+
+[sub_resource type="Animation" id="Animation_oifmc"]
+resource_name = "attack"
+
+[sub_resource type="Animation" id="Animation_6un8t"]
+resource_name = "death"
+length = 0.16667
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.166667),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_hyxbn"]
+resource_name = "follow"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_erqv1"]
+_data = {
+"attack": SubResource("Animation_oifmc"),
+"death": SubResource("Animation_6un8t"),
+"follow": SubResource("Animation_hyxbn")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_b46bq"]
+radius = 15.0
+height = 56.0
+
+[node name="summond_enemy" type="CharacterBody2D"]
+script = ExtResource("1_ph2nx")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_erqv1")
+}
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+custom_minimum_size = Vector2(100, 10)
+offset_left = -49.0
+offset_top = -60.0
+offset_right = 51.0
+offset_bottom = -33.0
+max_value = 30.0
+value = 30.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_b46bq")
+
+[node name="debug" type="Label" parent="."]
+offset_left = -24.0
+offset_top = -86.0
+offset_right = 25.0
+offset_bottom = -63.0
+text = "debug
+"
+
+[node name="FiniteStateMachine" type="Node2D" parent="."]
+script = ExtResource("1_8ygf4")
+
+[node name="follow" type="Node2D" parent="FiniteStateMachine"]
+script = ExtResource("3_yu8u6")
+
+[node name="attack_enemy" type="Node2D" parent="FiniteStateMachine"]
+script = ExtResource("4_wy5yl")
+
+[node name="death_enemy" type="Node2D" parent="FiniteStateMachine"]
+script = ExtResource("2_ehy5i")

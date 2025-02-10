@@ -46,7 +46,7 @@ func deal_with_damage():
 			health = health - 20
 			$take_dmg_cooldown.start()
 			can_take_dmg = false
-			print("slime health = ", health)
+			print("enemy health = ", health)
 			if health <= 0:
 				self.queue_free()
 	

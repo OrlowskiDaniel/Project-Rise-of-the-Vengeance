@@ -1,5 +1,7 @@
 extends CharacterBody2D
- 
+
+@export var player_projectile_node: PackedScene 
+
 var enemy_inattack_range = false
 var enemy_attack_cooldown = true
 var health = 100
@@ -9,6 +11,7 @@ var attack_ip = false
 
 const speed = 300
 var current_dir = "none"
+
  
 func _ready():
 	$AnimatedSprite2D.play("front_idle")
@@ -29,32 +32,41 @@ func _physics_process(delta):
 		self.queue_free()
  
 # Player movement + animation movement
-func player_movement(delta): 
+
+func player_movement(delta):
+	var direction = Vector2.ZERO
+
+	# Handle input and set direction vector
 	if Input.is_action_pressed("ui_right"):
 		current_dir = "right"
-		play_anim(1)
-		velocity.x = speed
-		velocity.y = 0
-	elif Input.is_action_pressed("ui_left"):
+		direction.x += 1
+	if Input.is_action_pressed("ui_left"):
 		current_dir = "left"
-		play_anim(1)
-		velocity.x = -speed
-		velocity.y = 0
-	elif Input.is_action_pressed("ui_down"):
+		direction.x -= 1
+	if Input.is_action_pressed("ui_down"):
 		current_dir = "down"
-		play_anim(1)
-		velocity.x = 0
-		velocity.y = speed
-	elif Input.is_action_pressed("ui_up"):
+		direction.y += 1
+	if Input.is_action_pressed("ui_up"):
 		current_dir = "up"
+		direction.y -= 1
+
+
+	velocity = direction.normalized() * speed
+
+	# Set current animation based on movement direction
+	if direction != Vector2.ZERO:
 		play_anim(1)
-		velocity.x = 0
-		velocity.y = -speed
+		if abs(direction.x) > abs(direction.y):
+			current_dir = "right" if direction.x > 0 else "left"
+		else:
+			current_dir = "down" if direction.y > 0 else "up"
 	else:
 		play_anim(0)
-		velocity.x = 0
-		velocity.y = 0
+
+	# Update velocity and move the player
 	move_and_slide()
+
+
 
 
 func play_anim(movement):
@@ -117,21 +129,21 @@ func attack():
 	if Input.is_action_just_pressed("attack"):
 		global.player_current_attack = true
 		attack_ip = true
+		
 		if dir == "right":
-			$AnimetedSprite2D.flip_h = false
-			$AnimetedSprite2D.play("side_attack")
+			$AnimatedSprite2D.flip_h = false
+			$AnimatedSprite2D.play("side_attack")
 			$deal_attack_timer.start()
-		if dir == "left":
-			$AnimetedSprite2D.flip_h = true
-			$AnimetedSprite2D.play("side_attack")
+		elif dir == "left":
+			$AnimatedSprite2D.flip_h = true
+			$AnimatedSprite2D.play("side_attack")
 			$deal_attack_timer.start()
-		if dir == "down":
+		elif dir == "down":
 			$AnimatedSprite2D.play("front_attack")
 			$deal_attack_timer.start()
-		if dir == "up":
+		elif dir == "up":
 			$AnimatedSprite2D.play("back_attack")
 			$deal_attack_timer.start()
-			
 
 func _on_deal_attack_timer_timeout() -> void:
 	$deal_attack_timer.stop()
@@ -166,4 +178,14 @@ func _on_regain_timer_timeout() -> void:
 			health = 100
 	if health <= 0:
 		health = 0
-	
+
+func shoot():
+	var projectile = player_projectile_node.instantiate()
+ 
+	projectile.position = global_position
+	projectile.direction = (get_global_mouse_position() - global_position).normalized()
+	get_tree().current_scene.call_deferred("add_child",projectile)
+
+func _input(event):
+	if event.is_action("shoot"):
+		shoot()
