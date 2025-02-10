@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://d2ml7xe6gb2rq"]
+[gd_scene load_steps=8 format=3 uid="uid://d2ml7xe6gb2rq"]
 
 [ext_resource type="Script" path="res://scripts/bridge.gd" id="1_5cpj3"]
 [ext_resource type="Texture2D" uid="uid://dsmqdv5lcr50q" path="res://art/tileset/bridge.png" id="1_lh3fs"]
@@ -14,6 +14,9 @@ sources/0 = SubResource("TileSetAtlasSource_02rkf")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ya5rk"]
 size = Vector2(36, 179)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qsk1a"]
+size = Vector2(22.5, 112)
 
 [node name="bridge" type="Node2D"]
 script = ExtResource("1_5cpj3")
@@ -39,6 +42,12 @@ position = Vector2(-23, 315)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bridge_start_point"]
 position = Vector2(-74, 319.5)
 shape = SubResource("RectangleShape2D_ya5rk")
+
+[node name="bridge_end_point" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bridge_end_point"]
+position = Vector2(1043.25, 316)
+shape = SubResource("RectangleShape2D_qsk1a")
 
 [connection signal="body_entered" from="bridge_start_point" to="." method="_on_bridge_start_point_body_entered"]
 [connection signal="body_exited" from="bridge_start_point" to="." method="_on_bridge_start_point_body_exited"]
