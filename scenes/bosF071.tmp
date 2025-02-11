@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://ban82i18a3pf6"]
+[gd_scene load_steps=15 format=3 uid="uid://ban82i18a3pf6"]
 
 [ext_resource type="Texture2D" uid="uid://daicrd0k6tcwn" path="res://art/objects/bovenkantenachterkant_pilaar.png" id="1_dliuv"]
 [ext_resource type="Texture2D" uid="uid://dqeiio1w86mpa" path="res://art/objects/kapotte_pilaar_bovenkantenonderkant.png" id="2_7xaj3"]
@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://b6n5fff7lueot" path="res://art/tileset/LavaBlokjes-sheet.png" id="5_22020"]
 [ext_resource type="Texture2D" uid="uid://dsmqdv5lcr50q" path="res://art/tileset/bridge.png" id="6_ygmw5"]
 [ext_resource type="PackedScene" uid="uid://df6o0s7ig4i62" path="res://scenes/boss_hades.tscn" id="8_5f0l6"]
-[ext_resource type="PackedScene" uid="uid://cpgcdrlg1bidn" path="res://scenes/player.tscn" id="8_duywb"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_5bl2w"]
 texture = ExtResource("1_dliuv")
@@ -78,6 +77,3 @@ layer_0/tile_data = PackedInt32Array(65536, 5, 0, 131072, 5, 0, 196608, 5, 0, 26
 
 [node name="bossHades" parent="." instance=ExtResource("8_5f0l6")]
 position = Vector2(568, 160)
-
-[node name="Player" parent="." instance=ExtResource("8_duywb")]
-position = Vector2(148, 587)

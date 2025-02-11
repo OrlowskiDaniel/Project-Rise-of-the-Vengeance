@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://bt0v8cto55340"]
+[gd_scene load_steps=13 format=3 uid="uid://bt0v8cto55340"]
 
 [ext_resource type="Script" path="res://scripts/finite_state_machine.gd" id="1_8ygf4"]
 [ext_resource type="Script" path="res://scripts/summond_enemy.gd" id="1_ph2nx"]
+[ext_resource type="Texture2D" uid="uid://d2dkro47tvsv0" path="res://art/character/eagleV1.png" id="2_142s6"]
 [ext_resource type="Script" path="res://scripts/state.gd" id="2_ehy5i"]
 [ext_resource type="Script" path="res://scripts/follow.gd" id="3_yu8u6"]
 [ext_resource type="Script" path="res://scripts/attack_enemy.gd" id="4_wy5yl"]
@@ -38,13 +39,18 @@ _data = {
 }
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_b46bq"]
-radius = 15.0
-height = 56.0
+radius = 22.0
+height = 84.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1ksr0"]
+radius = 486.037
 
 [node name="summond_enemy" type="CharacterBody2D"]
 script = ExtResource("1_ph2nx")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-22, 27)
+texture = ExtResource("2_142s6")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -82,3 +88,11 @@ script = ExtResource("4_wy5yl")
 
 [node name="death_enemy" type="Node2D" parent="FiniteStateMachine"]
 script = ExtResource("2_ehy5i")
+
+[node name="player_detection" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="player_detection"]
+shape = SubResource("CircleShape2D_1ksr0")
+
+[connection signal="body_entered" from="player_detection" to="." method="_on_player_detection_body_entered"]
+[connection signal="body_exited" from="player_detection" to="." method="_on_player_detection_body_exited"]

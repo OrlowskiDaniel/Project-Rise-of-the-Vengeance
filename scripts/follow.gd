@@ -11,4 +11,4 @@ func exit():
 
 func transition():
 	if owner.direction.length() < 40:
-		get_parent().change_state("AttackSkeleton")
+		get_parent().change_state("attack")

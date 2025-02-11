@@ -1,16 +1,16 @@
 [gd_scene load_steps=6 format=3 uid="uid://b2vckpluvfl1x"]
 
 [ext_resource type="Script" path="res://scripts/enemy.gd" id="1_hj00n"]
-[ext_resource type="Texture2D" uid="uid://s5jtwujiqnh7" path="res://art/character/pp.png" id="2_wdqq1"]
+[ext_resource type="Texture2D" uid="uid://b63dabmrf5wis" path="res://art/character/cyclopV2.png" id="2_3lb3l"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6b64j"]
 radius = 275.002
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4n2df"]
-radius = 39.0512
+radius = 39.0128
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_y6cgg"]
-radius = 48.0416
+radius = 44.0
 
 [node name="enemy" type="CharacterBody2D"]
 script = ExtResource("1_hj00n")
@@ -42,9 +42,9 @@ offset_bottom = 38.0
 scale = Vector2(0.3, 0.3)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -0.999998)
-scale = Vector2(3.15625, 1.28125)
-texture = ExtResource("2_wdqq1")
+position = Vector2(0, -4)
+scale = Vector2(2.15313, 1.49531)
+texture = ExtResource("2_3lb3l")
 
 [connection signal="body_entered" from="detection_area" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="detection_area" to="." method="_on_detection_area_body_exited"]

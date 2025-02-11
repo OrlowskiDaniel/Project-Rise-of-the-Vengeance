@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+class_name Player
+
 @export var player_projectile_node: PackedScene 
 
 var enemy_inattack_range = false
@@ -33,7 +35,7 @@ func _physics_process(delta):
  
 # Player movement + animation movement
 
-func player_movement(delta):
+func player_movement(_delta):
 	var direction = Vector2.ZERO
 
 	# Handle input and set direction vector
@@ -111,11 +113,11 @@ func _on_player_hitbox_body_entered(body: Node2D) -> void:
 
 func _on_player_hitbox_body_exited(body: Node2D) -> void:
 	if body.has_method("enemy"):
-		enemy_inattack_range = true
+		enemy_inattack_range = false
 		
 func enemy_attack():
 	if enemy_inattack_range and enemy_attack_cooldown == true:
-		health = health - 49
+		health = health - 20
 		enemy_attack_cooldown = false
 		$attack_cooldown.start() 
 		print(health)
