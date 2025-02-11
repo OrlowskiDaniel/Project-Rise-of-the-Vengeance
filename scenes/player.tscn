@@ -327,8 +327,9 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_j7ai0"]
-radius = 14.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sacgm"]
+radius = 13.0
+height = 56.0
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 7
@@ -341,12 +342,13 @@ shape = SubResource("CircleShape2D_3e3sj")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_61xvh")
-animation = &"side_walk"
+animation = &"side_attack"
 
 [node name="player_hitbox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="player_hitbox"]
-shape = SubResource("CircleShape2D_j7ai0")
+position = Vector2(-1, -4)
+shape = SubResource("CapsuleShape2D_sacgm")
 
 [node name="attack_cooldown" type="Timer" parent="."]
 wait_time = 2.0
@@ -355,6 +357,7 @@ wait_time = 2.0
 wait_time = 0.5
 
 [node name="world_camera" type="Camera2D" parent="."]
+position = Vector2(0, -10)
 zoom = Vector2(1.5, 1.5)
 limit_left = 0
 limit_top = 0

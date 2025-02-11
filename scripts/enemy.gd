@@ -4,11 +4,11 @@ var speed = 75
 var player_chase = false
 var player = null
 
-var health = 100
+var health = 30
 var player_inattack_zone = false
 var can_take_dmg = true
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	deal_with_damage()
 	
 	if player_chase:
@@ -22,7 +22,7 @@ func _on_detection_area_body_entered(body: Node2D) -> void:
 	player_chase = true
 
 
-func _on_detection_area_body_exited(body: Node2D) -> void:
+func _on_detection_area_body_exited(_body: Node2D) -> void:
 	player = null
 	player_chase = false
 	
@@ -43,7 +43,7 @@ func _on_enemy_hitbox_body_exited(body: Node2D) -> void:
 func deal_with_damage():
 	if player_inattack_zone and global.player_current_attack == true:
 		if can_take_dmg == true:
-			health = health - 20
+			health = health - 5
 			$take_dmg_cooldown.start()
 			can_take_dmg = false
 			print("enemy health = ", health)
