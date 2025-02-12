@@ -1,22 +1,29 @@
-[gd_scene load_steps=4 format=3 uid="uid://cvnmbcgi8aw6x"]
+[gd_scene load_steps=6 format=3 uid="uid://cvnmbcgi8aw6x"]
 
 [ext_resource type="Script" path="res://scenes/minion.gd" id="1_kiygo"]
 [ext_resource type="Texture2D" uid="uid://d2dkro47tvsv0" path="res://art/character/eagleV1.png" id="2_qfvmr"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_obblg"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_hqjy2"]
+radius = 13.0
 height = 50.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0kv5y"]
+radius = 26.0
+height = 54.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lplwf"]
+radius = 559.008
 
 [node name="Minion" type="CharacterBody2D"]
 script = ExtResource("1_kiygo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_hqjy2")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-20, 16)
 scale = Vector2(0.746667, 0.746667)
 texture = ExtResource("2_qfvmr")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-3, 0)
-shape = SubResource("CapsuleShape2D_obblg")
 
 [node name="healthbar" type="ProgressBar" parent="."]
 modulate = Color(0, 1, 0, 1)
@@ -25,4 +32,20 @@ offset_top = -41.0
 offset_right = 122.0
 offset_bottom = -14.0
 scale = Vector2(0.3, 0.3)
+max_value = 25.0
+value = 25.0
 show_percentage = false
+
+[node name="enemy_hitbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="enemy_hitbox"]
+shape = SubResource("CapsuleShape2D_0kv5y")
+
+[node name="detection_area" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detection_area"]
+shape = SubResource("CircleShape2D_lplwf")
+
+[node name="DashTimer" type="Timer" parent="."]
+
+[node name="InvincibilityTimer" type="Timer" parent="."]

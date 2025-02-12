@@ -81,3 +81,8 @@ position = Vector2(148, 587)
 
 [node name="Boss" parent="." instance=ExtResource("8_t4g1k")]
 position = Vector2(578, 161)
+
+[node name="collisions" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="collisions"]
+polygon = PackedVector2Array(-1, 0, 0, 650, 1160, 654, 1153, 652, 1153, -1, -6, -1, -6, -150, 1321, -140, 1324, 781, -196, 777, -182, -195, -31, -202, -8, -158, -6, -1)
