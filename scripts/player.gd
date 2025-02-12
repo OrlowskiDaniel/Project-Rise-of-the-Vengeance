@@ -17,6 +17,7 @@ var current_dir = "none"
  
 func _ready():
 	$AnimatedSprite2D.play("front_idle")
+	add_to_group("Player")
 
  
 func _physics_process(delta):
@@ -39,16 +40,16 @@ func player_movement(_delta):
 	var direction = Vector2.ZERO
 
 	# Handle input and set direction vector
-	if Input.is_action_pressed("ui_right"):
+	if Input.is_action_pressed("right"):
 		current_dir = "right"
 		direction.x += 1
-	if Input.is_action_pressed("ui_left"):
+	if Input.is_action_pressed("left"):
 		current_dir = "left"
 		direction.x -= 1
-	if Input.is_action_pressed("ui_down"):
+	if Input.is_action_pressed("down"):
 		current_dir = "down"
 		direction.y += 1
-	if Input.is_action_pressed("ui_up"):
+	if Input.is_action_pressed("up"):
 		current_dir = "up"
 		direction.y -= 1
 
@@ -109,18 +110,25 @@ func player():
 func _on_player_hitbox_body_entered(body: Node2D) -> void:
 	if body.has_method("enemy"):
 		enemy_inattack_range = true
+	if body.is_in_group("Minion"):
+		enemy_inattack_range = true
 
 
 func _on_player_hitbox_body_exited(body: Node2D) -> void:
 	if body.has_method("enemy"):
 		enemy_inattack_range = false
-		
+	if body.is_in_group("Minion"):
+		enemy_inattack_range = false
+
 func enemy_attack():
 	if enemy_inattack_range and enemy_attack_cooldown == true:
 		health = health - 20
 		enemy_attack_cooldown = false
 		$attack_cooldown.start() 
-		print(health)
+		print("Player took damage! Health:", health)
+
+
+
 
 func _on_attack_cooldown_timeout() -> void:
 	enemy_attack_cooldown = true
@@ -160,6 +168,9 @@ func current_camera():
 	elif global.current_scene == "bridge":
 		$world_camera.enabled = false
 		$bridge_camera.enabled = true
+	elif global.current_scene == "boss_room":
+		$bridge_camera.enabled = false
+		$boss_room_camera.enabled = true
 
 
 func update_health():
