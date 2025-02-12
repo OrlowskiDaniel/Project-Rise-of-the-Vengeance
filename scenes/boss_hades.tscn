@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://dj56f8su82uyr" path="res://art/character/hades.png" id="2_wi1mk"]
 [ext_resource type="Script" path="res://scripts/summon.gd" id="3_03p2b"]
 [ext_resource type="Script" path="res://scripts/attack.gd" id="4_5bssy"]
-[ext_resource type="PackedScene" uid="uid://be06h7ff3dexb" path="res://scenes/projectile.tscn" id="5_lvgwn"]
+[ext_resource type="PackedScene" uid="uid://be06h7ff3dexb" path="res://scenes/projectile_spear.tscn" id="5_lvgwn"]
 [ext_resource type="Script" path="res://scripts/death.gd" id="7_6jxxn"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ncx2t"]
@@ -31,8 +31,6 @@ shape = SubResource("CapsuleShape2D_ncx2t")
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="ProgressBar" type="ProgressBar" parent="UI"]
-unique_name_in_owner = true
-visible = false
 custom_minimum_size = Vector2(200, 0)
 anchors_preset = 7
 anchor_left = 0.5
