@@ -2,12 +2,15 @@ extends CharacterBody2D
 
 class_name Player
 
-@export var player_projectile_node: PackedScene 
+@export var player_projectile_node: PackedScene
+@export var attack_damage: int = 2  # Damage per attack
+@onready var attack_area: Area2D = $AttackArea  # Reference to AttackArea 
 
 var enemy_inattack_range = false
 var enemy_attack_cooldown = true
 var health = 100
 var player_alive = true
+
 
 var attack_ip = false
 
@@ -32,7 +35,6 @@ func _physics_process(delta):
 		player_alive = false #go back to manu or add death screen or respown
 		health = 0
 		print("player has been killed")
-		self.queue_free()
  
 # Player movement + animation movement
 
@@ -122,11 +124,20 @@ func _on_player_hitbox_body_exited(body: Node2D) -> void:
 
 func enemy_attack():
 	if enemy_inattack_range and enemy_attack_cooldown == true:
-		health = health - 20
+		health = health - 10
 		enemy_attack_cooldown = false
 		$attack_cooldown.start() 
 		print("Player took damage! Health:", health)
 
+func take_damage(amount: int):
+	if health > 0:  
+		health -= amount
+		print("Player took damage! Health:", health)
+		update_health()  # Update health bar
+		
+		if health <= 0:
+			die()
+	
 
 
 
@@ -135,30 +146,38 @@ func _on_attack_cooldown_timeout() -> void:
 
 func attack():
 	var dir = current_dir
-	
+
 	if Input.is_action_just_pressed("attack"):
 		global.player_current_attack = true
-		attack_ip = true
-		
-		if dir == "right":
-			$AnimatedSprite2D.flip_h = false
-			$AnimatedSprite2D.play("side_attack")
-			$deal_attack_timer.start()
-		elif dir == "left":
-			$AnimatedSprite2D.flip_h = true
-			$AnimatedSprite2D.play("side_attack")
-			$deal_attack_timer.start()
-		elif dir == "down":
-			$AnimatedSprite2D.play("front_attack")
-			$deal_attack_timer.start()
-		elif dir == "up":
-			$AnimatedSprite2D.play("back_attack")
-			$deal_attack_timer.start()
+		attack_ip = true  # Set attacking state
+		$deal_attack_timer.start()
+
+		# Play the correct attack animation based on direction
+		match dir:
+			"right":
+				$AnimatedSprite2D.flip_h = false
+				$AnimatedSprite2D.play("side_attack")
+			"left":
+				$AnimatedSprite2D.flip_h = true
+				$AnimatedSprite2D.play("side_attack")
+			"down":
+				$AnimatedSprite2D.play("front_attack")
+			"up":
+				$AnimatedSprite2D.play("back_attack")
+
+		print("Player attacked!")
+
+		for body in attack_area.get_overlapping_bodies():
+			if body.is_in_group("Minion"):
+				body.take_damage(attack_damage)
+				print("Hit Minion!")  # Debugging
+			elif body.is_in_group("Boss"):
+				body.take_damage(attack_damage)
+				print("Hit Boss!")  # Debugging
 
 func _on_deal_attack_timer_timeout() -> void:
-	$deal_attack_timer.stop()
-	global.player_current_attack = false
 	attack_ip = false
+	global.player_current_attack = false
 
 
 func current_camera():
@@ -199,6 +218,13 @@ func shoot():
 	projectile.direction = (get_global_mouse_position() - global_position).normalized()
 	get_tree().current_scene.call_deferred("add_child",projectile)
 
+
 func _input(event):
+	if event.is_action_pressed("attack"):  # When "attack" button is pressed
+		attack()
 	if event.is_action("shoot"):
 		shoot()
+
+func die():
+	print("Player has died! Redirecting to death screen...")
+	get_tree().change_scene_to_file("res://scenes/death_screen.tscn")  # Redirect to death screen

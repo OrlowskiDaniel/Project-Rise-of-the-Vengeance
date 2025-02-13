@@ -10,7 +10,7 @@ radius = 275.002
 radius = 39.0128
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_y6cgg"]
-radius = 44.0
+radius = 39.0128
 
 [node name="enemy" type="CharacterBody2D"]
 script = ExtResource("1_hj00n")

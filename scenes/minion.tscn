@@ -8,7 +8,7 @@ radius = 13.0
 height = 50.0
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0kv5y"]
-radius = 26.0
+radius = 25.0
 height = 54.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_lplwf"]
@@ -25,15 +25,13 @@ position = Vector2(-20, 16)
 scale = Vector2(0.746667, 0.746667)
 texture = ExtResource("2_qfvmr")
 
-[node name="healthbar" type="ProgressBar" parent="."]
+[node name="HealthBar" type="ProgressBar" parent="."]
 modulate = Color(0, 1, 0, 1)
 offset_left = -25.0
 offset_top = -41.0
 offset_right = 122.0
 offset_bottom = -14.0
 scale = Vector2(0.3, 0.3)
-max_value = 25.0
-value = 25.0
 show_percentage = false
 
 [node name="enemy_hitbox" type="Area2D" parent="."]
