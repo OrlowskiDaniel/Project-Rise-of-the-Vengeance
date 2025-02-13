@@ -86,3 +86,9 @@ position = Vector2(578, 161)
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="collisions"]
 polygon = PackedVector2Array(37, 61, 44, 611, 1143, 619, 1151, 623, 1138, 41, -8, 42, -1, -220, 53, -219, 1434, -265, 1442, 913, -300, 926, -303, -247, -31, -202, -8, -158, -20, 5)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+offset_left = 36.0
+offset_top = 43.0
+offset_right = 1153.0
+offset_bottom = 628.0

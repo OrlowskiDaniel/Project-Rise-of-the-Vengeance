@@ -255,7 +255,7 @@ scale = Vector2(2.40625, 2.40625)
 sprite_frames = SubResource("SpriteFrames_a40x5")
 animation = &"summon"
 autoplay = "idle"
-frame_progress = 0.0625421
+frame_progress = 0.336061
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 0)
@@ -268,6 +268,8 @@ shape = SubResource("CapsuleShape2D_rvmnm")
 [node name="TeleportTimer" type="Timer" parent="."]
 
 [node name="MoveTimer" type="Timer" parent="."]
+
+[node name="Invincibility" type="Timer" parent="."]
 
 [node name="UI" type="CanvasLayer" parent="."]
 
