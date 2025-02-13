@@ -3,7 +3,7 @@ extends CharacterBody2D
 class_name Player
 
 @export var player_projectile_node: PackedScene
-@export var attack_damage: int = 2  # Damage per attack
+@export var attack_damage: int = 20  # Damage per attack
 @onready var attack_area: Area2D = $AttackArea  # Reference to AttackArea 
 
 var enemy_inattack_range = false
@@ -35,6 +35,7 @@ func _physics_process(delta):
 		player_alive = false #go back to manu or add death screen or respown
 		health = 0
 		print("player has been killed")
+		get_tree().change_scene_to_file("res://scenes/death_screen.tscn")
  
 # Player movement + animation movement
 
@@ -128,13 +129,15 @@ func enemy_attack():
 		enemy_attack_cooldown = false
 		$attack_cooldown.start() 
 		print("Player took damage! Health:", health)
+		
 
 func take_damage(amount: int):
 	if health > 0:  
 		health -= amount
 		print("Player took damage! Health:", health)
 		update_health()  # Update health bar
-		
+		attack_damage = attack_damage - 1
+		print("Player lost attack poweer! attack damage:", attack_damage)
 		if health <= 0:
 			die()
 	

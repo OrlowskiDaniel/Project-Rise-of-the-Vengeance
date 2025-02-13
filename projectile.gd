@@ -1,7 +1,7 @@
 extends Node2D
 
 @export var speed: float = 300.0
-@export var damage: int = 5  # Damage to the player
+@export var damage: int = 5  # damage to the player
 var direction: Vector2 = Vector2.ZERO
 
 func _ready():
@@ -10,7 +10,7 @@ func _ready():
 
 func _process(delta):
 	if direction != Vector2.ZERO:
-		rotation = direction.angle()  # Rotate spear towards movement
+		rotation = direction.angle()  # rotate spear towards movement
 
 func _physics_process(delta):
 	position += direction * speed * delta

@@ -1,6 +1,21 @@
-[gd_scene load_steps=2 format=3 uid="uid://dh5vqdbbtebnm"]
+[gd_scene load_steps=5 format=3 uid="uid://dh5vqdbbtebnm"]
 
 [ext_resource type="Script" path="res://death_screen.gd" id="1_o56ey"]
+[ext_resource type="FontFile" uid="uid://betrc8jju1qt4" path="res://NewRocker-Regular.ttf" id="2_o0nk5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1y2lx"]
+bg_color = Color(0.666667, 0.262745, 0.262745, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mdveu"]
+bg_color = Color(0.368627, 0.811765, 0.309804, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [node name="death_screen" type="Control"]
 layout_mode = 3
@@ -11,21 +26,62 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_o56ey")
 
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_left = -58.0
+offset_top = -4.0
+offset_right = 1193.0
+offset_bottom = 676.0
+color = Color(0.337255, 0.152941, 0.152941, 1)
+
 [node name="MarginContainer" type="MarginContainer" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -97.0
+offset_top = -57.0
+offset_right = 98.0
+offset_bottom = 34.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+theme_override_constants/separation = 10
 
 [node name="Retry" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_1y2lx")
 text = "Retry"
 
 [node name="Main menu" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_mdveu")
 text = "Main menu
 "
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -221.5
+offset_top = -198.0
+offset_right = 221.5
+offset_bottom = -121.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.894118, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_o0nk5")
+theme_override_font_sizes/font_size = 60
+text = "YOU ARE DAED"
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Retry" to="." method="_on_retry_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Main menu" to="." method="_on_main_menu_pressed"]

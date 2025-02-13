@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://bjrjvo5buu8ea"]
+[gd_scene load_steps=23 format=3 uid="uid://bjrjvo5buu8ea"]
 
 [ext_resource type="Script" path="res://scripts/world.gd" id="1_hghvr"]
 [ext_resource type="PackedScene" uid="uid://cpgcdrlg1bidn" path="res://scenes/player.tscn" id="1_i8vvd"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://dqeiio1w86mpa" path="res://art/objects/kapotte_pilaar_bovenkantenonderkant.png" id="7_16wus"]
 [ext_resource type="Texture2D" uid="uid://c7l0r0xealcks" path="res://art/objects/kapotte_pilaar_middenstuk.png" id="8_eaejr"]
 [ext_resource type="Texture2D" uid="uid://b0b6mxvfsyeqd" path="res://art/objects/middenkant_pilaar.png" id="9_euoi2"]
+[ext_resource type="FontFile" uid="uid://betrc8jju1qt4" path="res://NewRocker-Regular.ttf" id="12_2dqy5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_hj7cn"]
 texture = ExtResource("1_kcpfb")
@@ -106,6 +107,41 @@ shape = SubResource("RectangleShape2D_ldoid")
 
 [node name="enemy2" parent="." instance=ExtResource("2_bcktf")]
 position = Vector2(864, 132)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Label4" type="Label" parent="UI"]
+offset_left = 343.0
+offset_top = 590.0
+offset_right = 934.0
+offset_bottom = 613.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("12_2dqy5")
+text = "If you get hit by Enemy you will loose attack dmg so DONT GET HIT!!!"
+
+[node name="Label" type="Label" parent="UI"]
+offset_left = 341.0
+offset_top = 482.0
+offset_right = 932.0
+offset_bottom = 505.0
+theme_override_fonts/font = ExtResource("12_2dqy5")
+text = "Tutorial Room"
+
+[node name="Label2" type="Label" parent="UI"]
+offset_left = 343.0
+offset_top = 521.0
+offset_right = 934.0
+offset_bottom = 544.0
+theme_override_fonts/font = ExtResource("12_2dqy5")
+text = "Use WASD to move around"
+
+[node name="Label3" type="Label" parent="UI"]
+offset_left = 343.0
+offset_top = 555.0
+offset_right = 934.0
+offset_bottom = 578.0
+theme_override_fonts/font = ExtResource("12_2dqy5")
+text = "Use left mouse button to attack"
 
 [connection signal="body_entered" from="brige_transition_point" to="." method="_on_brige_transition_point_body_entered"]
 [connection signal="body_exited" from="brige_transition_point" to="." method="_on_brige_transition_point_body_exited"]

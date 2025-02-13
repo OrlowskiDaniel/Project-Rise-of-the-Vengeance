@@ -8,7 +8,7 @@ extends CharacterBody2D
 @export var max_x: float = 1000.0
 @export var min_y: float = 0
 @export var max_y: float = 600.0
-@export var max_health: int = 100  # Boss max health
+@export var max_health: int = 300  # Boss max health
 @export var slash_damage: int = 5  # Damage of the slash attack
 @export var slash_range: float = 100.0  # Range for melee attack
 
@@ -18,7 +18,9 @@ extends CharacterBody2D
 @onready var summon_timer: Timer = $SummonTimer
 @onready var animation: AnimatedSprite2D = $AnimatedSprite2D  
 @onready var health_bar: ProgressBar = $UI/HealthBar
+@onready var invincibility_timer: Timer = $Invincibility
 
+var can_take_damage: bool = true  # Damage cooldown
 var direction: Vector2 = Vector2.ZERO
 var health: int  # Current health
 
@@ -35,6 +37,7 @@ func _ready():
 	teleport_timer.timeout.connect(teleport)
 	attack_timer.timeout.connect(attack)
 	summon_timer.timeout.connect(summon_minion)
+	invincibility_timer.timeout.connect(enable_damage)
 
 	move_timer.start(1.5)
 	teleport_timer.start(5.0)
@@ -59,7 +62,7 @@ func update_animation():
 
 func teleport():
 	var new_position: Vector2
-	var max_attempts = 10
+	var max_attempts = 20
 
 	for i in range(max_attempts):
 		new_position = global_position + Vector2(randf_range(-teleport_range, teleport_range), randf_range(-teleport_range, teleport_range))
@@ -127,29 +130,36 @@ func summon_minion():
 	if minion_scene:
 		animation.play("summon")
 
-		await get_tree().create_timer(0.8).timeout  # Delay before summoning
+		await get_tree().create_timer(0.8).timeout  # delay before summoning
 
 		var minion = minion_scene.instantiate()
 		minion.global_position = global_position + Vector2(randf_range(-50, 50), randf_range(-50, 50))
 		get_parent().add_child(minion)
 
-	animation.play("idle")  # Return to idle
+	animation.play("idle")  # return to idle
 
 
 func take_damage(amount: int):
-	health -= amount  # Reduce boss HP
-	health = max(health, 0)  # Prevent negative HP
-	update_health_bar()  # Update UI
+	if can_take_damage:
+		health -= amount  # reduce boss HP
+		health = max(health, 0)  # prevent negative HP
+		update_health_bar()  # update UI
 
-	print("Boss HP:", health, " - HealthBar Value:", health_bar.value) # Debugging
+		print("Boss HP:", health, " - HealthBar Value:", health_bar.value) # Debugging
+		
+		can_take_damage = false
+		invincibility_timer.start(0.4) 
+	
 
 	if health <= 0:
-		die()  # Kill the boss if health reaches 0
+		die()  # kill the boss if health reaches 0
 
 func update_health_bar():
 	if health_bar:
-		health_bar.value = (float(health) / max_health) * 100.0  # Convert to percentage
+		health_bar.value = (float(health) / max_health) * 100.0  # convert to percentage
 
 func die():
 	print("Boss defeated!")
 	queue_free()
+func enable_damage():
+	can_take_damage = true  # Allow taking damage again
