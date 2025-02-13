@@ -12,6 +12,7 @@ var player_inattack_zone = false
 
 @onready var dash_timer: Timer = $DashTimer
 @onready var invincibility_timer: Timer = $InvincibilityTimer
+@onready var health_bar: ProgressBar = $HealthBar  
 
 func _ready():
 	player = get_tree().get_first_node_in_group("Player")  # Get player reference
@@ -19,6 +20,7 @@ func _ready():
 	invincibility_timer.timeout.connect(enable_damage)
 	dash_timer.start(randf_range(3, 6))  # Dash every 3-6 seconds
 	add_to_group("Minion")
+	health_bar.value = (health / 3.0) * 100 
 
 func _physics_process(delta):
 	if player and not is_dashing:
@@ -37,17 +39,24 @@ func start_dash():
 
 func _on_body_entered(body):
 	if body.is_in_group("Player"):
-		body.take_damage(1)  # Call player damage function (implement in Player script)
+		body.take_damage(5)  # Call player damage function (implement in Player script)
 
 func take_damage(amount: int):
-	if player_inattack_zone and global.player_current_attack == true:
-		if can_take_damage:
-			health -= health - 1
-			can_take_damage = false
-			invincibility_timer.start(1.0)  # 1 second invincibility
-			print("Minion took damage! Health:", health)
-			if health <= 0:
-				queue_free()  # Destroy minion when health reaches 0
+	if can_take_damage:
+		health -= amount
+		update_health_bar()
+		can_take_damage = false
+		invincibility_timer.start(1.0)  # 1 second cooldown
+		print("Minion took damage! Health:", health)
+
+func update_health_bar():
+	if health_bar:
+		health_bar.value = (health / 3.0) * 100  # Convert to percentage
+		if health <= 0:
+			die()  # Remove minion when health reaches 0
+
+func die():
+	queue_free()  # Remove the minion from the game
 
 func enable_damage():
 	can_take_damage = true  # Allow taking damage again

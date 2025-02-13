@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://ddthlxir8f06t"]
+[gd_scene load_steps=6 format=3 uid="uid://ddthlxir8f06t"]
 
 [ext_resource type="Script" path="res://scripts/menu.gd" id="1_mmqvg"]
+[ext_resource type="Texture2D" uid="uid://bsejhvn3u8hmg" path="res://art/particles/cover.png" id="2_kx7hr"]
 [ext_resource type="FontFile" uid="uid://betrc8jju1qt4" path="res://NewRocker-Regular.ttf" id="2_ncbu4"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vy68u"]
@@ -47,6 +48,11 @@ offset_right = 107.0
 offset_bottom = 80.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Cover" type="Sprite2D" parent="MarginContainer"]
+modulate = Color(1, 1, 1, 0.913725)
+position = Vector2(97, 177)
+texture = ExtResource("2_kx7hr")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2

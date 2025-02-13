@@ -1,10 +1,8 @@
-[gd_scene load_steps=46 format=3 uid="uid://cpgcdrlg1bidn"]
+[gd_scene load_steps=47 format=3 uid="uid://cpgcdrlg1bidn"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_vc8ki"]
 [ext_resource type="PackedScene" uid="uid://bwd04tvoondfx" path="res://scenes/player_projectile.tscn" id="2_2u2yw"]
 [ext_resource type="Texture2D" uid="uid://drxj6s2iairru" path="res://art/character/Character_Spritesheet 1.png" id="3_2o8o2"]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_3e3sj"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vdw3k"]
 atlas = ExtResource("3_2o8o2")
@@ -328,26 +326,33 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sacgm"]
-radius = 13.0
+radius = 18.0
 height = 56.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_3e3sj"]
+radius = 14.3178
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_obk8w"]
+radius = 31.0161
+
 [node name="Player" type="CharacterBody2D"]
+y_sort_enabled = true
+position = Vector2(0, 13)
 collision_layer = 7
 collision_mask = 3
 script = ExtResource("1_vc8ki")
 player_projectile_node = ExtResource("2_2u2yw")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("CircleShape2D_3e3sj")
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(1, 0)
 sprite_frames = SubResource("SpriteFrames_61xvh")
 animation = &"side_attack"
+offset = Vector2(0, -20)
 
 [node name="player_hitbox" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="player_hitbox"]
-position = Vector2(-1, -4)
+position = Vector2(-1, -25)
 shape = SubResource("CapsuleShape2D_sacgm")
 
 [node name="attack_cooldown" type="Timer" parent="."]
@@ -377,17 +382,31 @@ drag_horizontal_enabled = true
 drag_vertical_enabled = true
 
 [node name="boss_room_camera" type="Camera2D" parent="."]
+position = Vector2(550, 300)
+zoom = Vector2(0.7, 0.7)
 
 [node name="healthbar" type="ProgressBar" parent="."]
 modulate = Color(0, 1, 0, 1)
-offset_left = -26.0
-offset_top = 38.0
-offset_right = 151.0
-offset_bottom = 65.0
+offset_left = -27.0
+offset_top = 10.0
+offset_right = 150.0
+offset_bottom = 37.0
 scale = Vector2(0.3, 0.3)
 show_percentage = false
+metadata/_edit_use_anchors_ = true
 
 [node name="regain_timer" type="Timer" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -10)
+shape = SubResource("CircleShape2D_3e3sj")
+
+[node name="AttackArea" type="Area2D" parent="."]
+position = Vector2(0, 9)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+position = Vector2(-1, -36)
+shape = SubResource("CircleShape2D_obk8w")
 
 [connection signal="body_entered" from="player_hitbox" to="." method="_on_player_hitbox_body_entered"]
 [connection signal="body_exited" from="player_hitbox" to="." method="_on_player_hitbox_body_exited"]
