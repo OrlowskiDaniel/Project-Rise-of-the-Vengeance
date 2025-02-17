@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://ddthlxir8f06t"]
+[gd_scene load_steps=7 format=3 uid="uid://ddthlxir8f06t"]
 
 [ext_resource type="Script" path="res://scripts/menu.gd" id="1_mmqvg"]
 [ext_resource type="Texture2D" uid="uid://bsejhvn3u8hmg" path="res://art/particles/cover.png" id="2_kx7hr"]
 [ext_resource type="FontFile" uid="uid://betrc8jju1qt4" path="res://NewRocker-Regular.ttf" id="2_ncbu4"]
+[ext_resource type="AudioStream" uid="uid://bcgloqq1wddph" path="res://sound_game/Goblins_Den_(Regular).wav" id="4_2i1gh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vy68u"]
 bg_color = Color(0.273873, 0.273873, 0.273873, 1)
@@ -97,6 +98,9 @@ theme_override_font_sizes/font_size = 55
 text = "Rise of the Vengeance"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="chill_music" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_2i1gh")
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/options" to="." method="_on_play_pressed"]

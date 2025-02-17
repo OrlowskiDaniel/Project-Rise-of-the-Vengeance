@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://d2ml7xe6gb2rq"]
+[gd_scene load_steps=21 format=3 uid="uid://d2ml7xe6gb2rq"]
 
 [ext_resource type="Script" path="res://scripts/bridge.gd" id="1_5cpj3"]
 [ext_resource type="Texture2D" uid="uid://dsmqdv5lcr50q" path="res://art/tileset/bridge.png" id="1_lh3fs"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://dqeiio1w86mpa" path="res://art/objects/kapotte_pilaar_bovenkantenonderkant.png" id="6_0dpgr"]
 [ext_resource type="Texture2D" uid="uid://b0b6mxvfsyeqd" path="res://art/objects/middenkant_pilaar.png" id="7_u5lia"]
 [ext_resource type="PackedScene" uid="uid://cvnmbcgi8aw6x" path="res://scenes/minion.tscn" id="10_ota7t"]
+[ext_resource type="AudioStream" uid="uid://c3dwv11hu6iv6" path="res://sound_game/Goblins_Dance_(Battle).wav" id="11_arv67"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_02rkf"]
 texture = ExtResource("1_lh3fs")
@@ -562,6 +563,11 @@ position = Vector2(508, 272)
 
 [node name="Minion5" parent="." instance=ExtResource("10_ota7t")]
 position = Vector2(424, 363)
+
+[node name="normal_music" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(340, 589)
+stream = ExtResource("11_arv67")
+autoplay = true
 
 [connection signal="body_entered" from="bridge_start_point" to="." method="_on_bridge_start_point_body_entered"]
 [connection signal="body_exited" from="bridge_start_point" to="." method="_on_bridge_start_point_body_exited"]

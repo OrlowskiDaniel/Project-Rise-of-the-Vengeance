@@ -253,9 +253,9 @@ minion_scene = ExtResource("3_nwuh5")
 position = Vector2(2, -1)
 scale = Vector2(2.40625, 2.40625)
 sprite_frames = SubResource("SpriteFrames_a40x5")
-animation = &"summon"
+animation = &"projectile"
 autoplay = "idle"
-frame_progress = 0.336061
+frame_progress = 0.905667
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(1, 0)
