@@ -138,7 +138,7 @@ func take_damage(amount: int):
 		update_health()  # Update health bar
 		attack_damage = attack_damage - 1
 		print("Player lost attack poweer! attack damage:", attack_damage)
-		if health <= 0:
+		if health <= 0 or attack_damage == 0:
 			die()
 	
 

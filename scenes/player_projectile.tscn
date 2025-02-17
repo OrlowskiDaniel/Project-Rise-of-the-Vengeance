@@ -68,12 +68,12 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_26fey"]
-size = Vector2(23.998, 22.3906)
+size = Vector2(25.3583, 30.0233)
 
 [node name="player_projectile" type="Area2D"]
 rotation = 7.86685
 collision_layer = 0
-collision_mask = 2
+collision_mask = 7
 script = ExtResource("1_j47iw")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -84,8 +84,7 @@ autoplay = "default"
 frame_progress = 0.448587
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-1.1415, 0.0546261)
-scale = Vector2(1, 1)
+position = Vector2(-0.461369, 1.83255)
 shape = SubResource("RectangleShape2D_26fey")
 
 [node name="VisibleOnScreenEnabler2D" type="VisibleOnScreenEnabler2D" parent="."]

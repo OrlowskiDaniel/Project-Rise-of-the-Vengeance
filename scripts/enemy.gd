@@ -8,6 +8,10 @@ var health = 30
 var player_inattack_zone = false
 var can_take_dmg = true
 
+
+func _ready():
+	add_to_group("Enemy")
+
 func _physics_process(_delta: float) -> void:
 	deal_with_damage()
 	

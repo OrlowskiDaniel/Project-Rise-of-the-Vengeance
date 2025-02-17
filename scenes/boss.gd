@@ -161,5 +161,6 @@ func update_health_bar():
 func die():
 	print("Boss defeated!")
 	queue_free()
+	get_tree().change_scene_to_file("res://scenes/endscreen.tscn")
 func enable_damage():
 	can_take_damage = true  # Allow taking damage again
